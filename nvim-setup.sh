@@ -5,6 +5,7 @@ sudo dnf install -y \
 	python-virtualenv \
 	python3-virtualenv \
 	ag \
+	xsel \
 	python-jedi \
 	python3-jedi \
 	${NULL}
