@@ -16,6 +16,9 @@
 
   call dein#add('Shougo/dein.vim')
 
+" aux
+  call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+
 " syntax
   call dein#add('sheerun/vim-polyglot')
   call dein#add('benekastah/neomake')
@@ -44,6 +47,10 @@
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('zchee/deoplete-jedi') " python
   call dein#add('racer-rust/vim-racer') " rust
+  call dein#add('amitab/vim-unite-cscope') "cscope
+
+" movement
+  call dein#add('tpope/vim-surround')
 
 " unite
   call dein#add('Shougo/unite.vim')
@@ -73,7 +80,7 @@
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
   let $NVIM_TUI_ENABLE_CURSOR_SHAPE=0
   set colorcolumn=79
-  let loaded_matchparen = 1
+  "let loaded_matchparen = 1
 
 " search
   set hlsearch
@@ -129,10 +136,11 @@
 " Theme -------------------------------------------------------------------{{{
 
   syntax on
-  colorscheme OceanicNext
+  let g:gruvbox_contrast_dark = "hard"
   set background=dark
-	highlight CursorLine guifg=none guibg=none gui=NONE
-" }}}
+  colorscheme gruvbox
+  highlight CursorLine guifg=none guibg=none gui=NONE
+"}}}
 
 " vim-airline -------------------------------------------------------------{{{
 
@@ -146,7 +154,7 @@
   let g:airline_right_sep = ''
   let g:airline_right_alt_sep = ''
   let g:airline_powerline_fonts = 0
-  let g:airline_theme='oceanicnext'
+  let g:airline_theme='ubaryd'
 
   nmap <a-right> :bnext<CR>
   nmap <a-left> :bprevious<CR>
@@ -223,6 +231,23 @@
 :highlight ExtraWhitespace ctermbg=darkgreen guibg=lightgreen
 :au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 :au InsertLeave * match ExtraWhitespace /\s\+$/
-"}}
+"}}}
+
+" cscope ------------------------------------------------------------------{{{
+ if has("cscope")
+   set csto=0
+   set cst
+   set nocsverb
+   " add any database in current directory
+   if filereadable("cscope.out")
+     cs add cscope.out
+     " else add database pointed to by environment
+   elseif $CSCOPE_DB != ""
+     cs add $CSCOPE_DB
+   endif
+  endif
+
+  nmap <leader>] :cs find s <C-R>=expand("<cword>")<CR><CR>
+"}}}
 
 " vim: set tabstop=2 shiftwidth=2 expandtab:
