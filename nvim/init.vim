@@ -51,6 +51,7 @@
 
 " movement
   call dein#add('tpope/vim-surround')
+  call dein#add('ficoos/plumb.vim')
 
 " unite
   call dein#add('Shougo/unite.vim')
@@ -156,6 +157,7 @@
   let g:airline_powerline_fonts = 0
   let g:airline_theme='ubaryd'
 
+  tmap <leader>/ <c-\><c-n>
   nmap <a-right> :bnext<CR>
   nmap <a-left> :bprevious<CR>
   tmap <a-right> <C-\><C-n>:bprevious<CR>
@@ -213,6 +215,7 @@
 "}}}
 
 " racer -------------------------------------------------------------------{{{
+
  set hidden
  let g:racer_cmd = $HOME."/.cargo/bin/racer"
 "}}}
@@ -224,16 +227,20 @@
 "}}}
 
 " keyboard short-cuts -----------------------------------------------------{{{
+
   nmap <leader>t :term<cr>
+  vmap <leader>y "+y
 "}}}
 
 " extra whitespace --------------------------------------------------------{{{
+
 :highlight ExtraWhitespace ctermbg=darkgreen guibg=lightgreen
 :au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 :au InsertLeave * match ExtraWhitespace /\s\+$/
 "}}}
 
 " cscope ------------------------------------------------------------------{{{
+
  if has("cscope")
    set csto=0
    set cst
@@ -248,6 +255,13 @@
   endif
 
   nmap <leader>] :cs find s <C-R>=expand("<cword>")<CR><CR>
+"}}}
+
+" plumb -------------------------------------------------------------------{{{
+
+  nmap <leader>p "zyiW:call plumb#exec('<c-r>z') <CR>
+  vmap <leader>p "zy:call plumb#exec(@z) <CR>
+
 "}}}
 
 " vim: set tabstop=2 shiftwidth=2 expandtab:
