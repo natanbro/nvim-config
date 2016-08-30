@@ -18,6 +18,7 @@
 
 " aux
   call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+  call dein#add('xolox/vim-misc')
 
 " syntax
   call dein#add('sheerun/vim-polyglot')
@@ -33,7 +34,7 @@
   call dein#add('felixhummel/setcolors.vim')
 
 " traverse
-  call dein#add('scrooloose/nerdtree')
+  call dein#add('Shougo/vimfiler.vim')
 
 " git
   call dein#add('tpope/vim-fugitive')
@@ -47,6 +48,7 @@
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('zchee/deoplete-jedi') " python
   call dein#add('racer-rust/vim-racer') " rust
+  call dein#add('xolox/vim-lua-ftplugin') " lua
   call dein#add('amitab/vim-unite-cscope') "cscope
 
 " movement
@@ -58,6 +60,9 @@
   call dein#add('Shougo/unite-outline')
   call dein#add('ujihisa/unite-colorscheme')
   call dein#add('osyo-manga/unite-quickfix')
+
+" config
+  call dein#add('editorconfig/editorconfig-vim')
 
 " finish set up
   if dein#check_install()
@@ -104,10 +109,23 @@
 
   autocmd FileType unite nmap <esc> <Plug>(unite_exit)
 
-  nnoremap <silent> <c-p> :Unite -auto-resize -start-insert -direction=botright file_rec/neovim<CR>
+  nnoremap <silent> <c-p> :Unite -auto-resize -start-insert -direction=botright file_rec/async<CR>
   nnoremap <silent> <c-j> :Unite -auto-resize -start-insert -direction=botright location_list<CR>
+  nnoremap <silent> <a-p> :Unite -auto-resize -start-insert -direction=botright vimgrep<CR>
   nnoremap <silent> <leader>u :call dein#update()<CR>
-  let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogroup','--hidden', '-g', '', '--ignore', '.git', '--ignore', '*.png', '--ignore', 'lib']
+  let g:unite_source_rec_async_command = ['ag',
+        \ '--follow',
+        \'--nocolor',
+        \'--nogroup',
+        \'--hidden',
+        \'-g', '',
+        \'--ignore', '.git',
+        \'--ignore', '*.png',
+        \'--ignore', 'lib',
+        \'--ignore-dir', 'node_modules',
+        \'--ignore-dir', 'bower_components',
+        \'--ignore-dir', 'tmp',
+        \]
 "}}}
 
 " Vim format --------------------------------------------------------------{{{
@@ -116,7 +134,6 @@
 "}}}
 
 " Depolete ----------------------------------------------------------------{{{
-
 
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#auto_completion_start_length = 1
@@ -132,8 +149,20 @@
 
   " map ctrl+space for complete
   inoremap <silent><expr> <c-space>
-           \ pumvisible() ? "\<C-n>" :
+           \ pumvisible() ? "<C-n>" :
            \ deoplete#mappings#manual_complete()
+  " lua
+  let g:lua_check_syntax = 0
+	let g:lua_complete_omni = 1
+	let g:lua_complete_dynamic = 0
+	let g:lua_define_completion_mappings = 0
+
+  if !exists('g:deoplete#omni#functions')
+    let g:deoplete#omni#functions = {}
+  endif
+	let g:deoplete#omni#functions.lua = 'xolox#lua#omnifunc'
+"}}}
+"
 " Theme -------------------------------------------------------------------{{{
 
   syntax on
@@ -184,40 +213,16 @@
   nmap <leader>9 <Plug>AirlineSelectTab9
 "}}}
 
-" NERDTree ----------------------------------------------------------------{{{
+" vimfiler ----------------------------------------------------------------{{{
 
-  map <C-\> :NERDTreeToggle<CR>
-  map <A-\> :NERDTreeFind<CR>
-  let NERDTreeShowHidden=0
-  let g:NERDTreeWinSize=45
-  let g:NERDTreeAutoDeleteBuffer=1
-  " NERDTress File highlighting
-  function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-  exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-  exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-  endfunction
+  :let g:vimfiler_as_default_explorer = 1
 
-  call NERDTreeHighlightFile('jade', 'green', 'none', 'green', 'none')
-  call NERDTreeHighlightFile('md', 'blue', 'none', '#6699CC', 'none')
-  call NERDTreeHighlightFile('config', 'yellow', 'none', '#d8a235', 'none')
-  call NERDTreeHighlightFile('conf', 'yellow', 'none', '#d8a235', 'none')
-  call NERDTreeHighlightFile('json', 'green', 'none', '#d8a235', 'none')
-  call NERDTreeHighlightFile('python', 'green', 'none', '#d8a235', 'none')
-  call NERDTreeHighlightFile('html', 'yellow', 'none', '#d8a235', 'none')
-  call NERDTreeHighlightFile('css', 'cyan', 'none', '#5486C0', 'none')
-  call NERDTreeHighlightFile('scss', 'cyan', 'none', '#5486C0', 'none')
-  call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', 'none')
-  call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', 'none')
-  call NERDTreeHighlightFile('ts', 'Blue', 'none', '#6699cc', 'none')
-  call NERDTreeHighlightFile('ds_store', 'Gray', 'none', '#686868', 'none')
-  call NERDTreeHighlightFile('gitconfig', 'black', 'none', '#686868', 'none')
-  call NERDTreeHighlightFile('gitignore', 'Gray', 'none', '#7F7F7F', 'none')
-"}}}
+  map <C-\> :VimFiler -project -explorer<CR>
 
 " racer -------------------------------------------------------------------{{{
 
- set hidden
- let g:racer_cmd = $HOME."/.cargo/bin/racer"
+  set hidden
+  let g:racer_cmd = $HOME."/.cargo/bin/racer"
 "}}}
 
 " neomake -----------------------------------------------------------------{{{
@@ -229,6 +234,9 @@
 " keyboard short-cuts -----------------------------------------------------{{{
 
   nmap <leader>t :term<cr>
+  nmap <silent> <c-s-up> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
+  nmap <c-s-down> ddp
+  nmap <c-s> :w<CR>
   vmap <leader>y "+y
 "}}}
 
@@ -261,7 +269,15 @@
 
   nmap <leader>p "zyiW:call plumb#exec('<c-r>z') <CR>
   vmap <leader>p "zy:call plumb#exec(@z) <CR>
+"}}}
 
+" terminal ----------------------------------------------------------------{{{
+
+  let $EDITOR="nvim_open"
+"}}}
+
+" ag ----------------------------------------------------------------------{{{
+  set grepprg="ag --vimgrep"
 "}}}
 
 " vim: set tabstop=2 shiftwidth=2 expandtab:
