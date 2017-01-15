@@ -49,7 +49,10 @@
   call dein#add('zchee/deoplete-jedi') " python
   call dein#add('racer-rust/vim-racer') " rust
   call dein#add('xolox/vim-lua-ftplugin') " lua
-  call dein#add('amitab/vim-unite-cscope') "cscope
+  call dein#add('amitab/vim-unite-cscope') " cscope
+
+" IDE
+  call dein#add('davidhalter/jedi-vim') " python
 
 " movement
   call dein#add('tpope/vim-surround')
@@ -78,6 +81,17 @@
 " Python development ------------------------------------------------------{{{
 
   let g:neomake_python_enabled_makers = ['flake8']
+  " we use deoplete-jedi
+  let g:jedi#completions_enabled = 0
+  " autocmd BufWinEnter '__doc__' setlocal bufhidden=delete
+  let g:jedi#goto_command = "<leader>d"
+  let g:jedi#goto_assignments_command = "<leader>g"
+  let g:jedi#goto_definitions_command = ""
+  let g:jedi#documentation_command = "<leader>?"
+  let g:jedi#usages_command = "<leader>n"
+  let g:jedi#completions_command = "<C-Space>"
+  let g:jedi#rename_command = "<leader>r"
+
 "}}}
 
 " General -----------------------------------------------------------------{{{
@@ -242,9 +256,10 @@
 
 " extra whitespace --------------------------------------------------------{{{
 
-:highlight ExtraWhitespace ctermbg=darkgreen guibg=lightgreen
-:au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-:au InsertLeave * match ExtraWhitespace /\s\+$/
+  :highlight ExtraWhitespace ctermbg=darkgreen guibg=lightgreen
+  :au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+  :au InsertLeave * match ExtraWhitespace /\s\+$/
+
 "}}}
 
 " cscope ------------------------------------------------------------------{{{
@@ -267,17 +282,26 @@
 
 " plumb -------------------------------------------------------------------{{{
 
-  nmap <leader>p "zyiW:call plumb#exec('<c-r>z') <CR>
+  nmap <leader>p "zyy:call plumb#exec('<c-r>z') <CR>
   vmap <leader>p "zy:call plumb#exec(@z) <CR>
 "}}}
 
 " terminal ----------------------------------------------------------------{{{
 
+  " when in built-in terminal open in current vim
   let $EDITOR="nvim_open"
 "}}}
 
 " ag ----------------------------------------------------------------------{{{
   set grepprg="ag --vimgrep"
+"}}}
+
+" must be last
+" localconfig -------------------------------------------------------------{{{
+  let lvimrc_path=".lvimrc"
+  if filereadable(expand(lvimrc_path))
+    exec "source " . lvimrc_path
+  endif
 "}}}
 
 " vim: set tabstop=2 shiftwidth=2 expandtab:
