@@ -34,7 +34,6 @@
   call dein#add('felixhummel/setcolors.vim')
 
 " traverse
-  "call dein#add('scrooloose/nerdtree')
   call dein#add('Shougo/vimfiler.vim')
 
 " git
@@ -237,37 +236,6 @@
   :let g:vimfiler_as_default_explorer = 1
 
   map <C-\> :VimFiler -project -explorer<CR>
-
-"}}}
-" NERDTree ----------------------------------------------------------------{{{
-"
-"  map <C-\> :NERDTreeToggle<CR>
-"  map <A-\> :NERDTreeFind<CR>
-"  let NERDTreeShowHidden=0
-"  let g:NERDTreeWinSize=45
-"  let g:NERDTreeAutoDeleteBuffer=1
-"  " NERDTress File highlighting
-"  function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-"    exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-"    exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-"  endfunction
-"
-"  call NERDTreeHighlightFile('jade', 'green', 'none', 'green', 'none')
-"  call NERDTreeHighlightFile('md', 'blue', 'none', '#6699CC', 'none')
-"  call NERDTreeHighlightFile('config', 'yellow', 'none', '#d8a235', 'none')
-"  call NERDTreeHighlightFile('conf', 'yellow', 'none', '#d8a235', 'none')
-"  call NERDTreeHighlightFile('json', 'green', 'none', '#d8a235', 'none')
-"  call NERDTreeHighlightFile('python', 'green', 'none', '#d8a235', 'none')
-"  call NERDTreeHighlightFile('html', 'yellow', 'none', '#d8a235', 'none')
-"  call NERDTreeHighlightFile('css', 'cyan', 'none', '#5486C0', 'none')
-"  call NERDTreeHighlightFile('scss', 'cyan', 'none', '#5486C0', 'none')
-"  call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', 'none')
-"  call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', 'none')
-"  call NERDTreeHighlightFile('ts', 'Blue', 'none', '#6699cc', 'none')
-"  call NERDTreeHighlightFile('ds_store', 'Gray', 'none', '#686868', 'none')
-"  call NERDTreeHighlightFile('gitconfig', 'black', 'none', '#686868', 'none')
-"  call NERDTreeHighlightFile('gitignore', 'Gray', 'none', '#7F7F7F', 'none')
-"}}}
 
 " racer -------------------------------------------------------------------{{{
 
