@@ -294,11 +294,10 @@
 
   " when in built-in terminal open in current vim
   let $EDITOR="nvim_open"
-
 "}}}
 
 " ag ----------------------------------------------------------------------{{{
-  set grepprg="ag --vimgrep"
+  set grepprg=ag\ --vimgrep
 "}}}
 
 " must be last
