@@ -47,6 +47,10 @@
   call dein#add('racer-rust/vim-racer') " rust
   call dein#add('xolox/vim-lua-ftplugin') " lua
 
+" snippets
+  call dein#add('SirVer/ultisnips')
+  call dein#add('honza/vim-snippets')
+
 " IDE
   call dein#add('davidhalter/jedi-vim') " python
 
@@ -142,6 +146,12 @@
   noremap <silent> <leader>f :Autoformat<CR>
 "}}}
 
+" UltiSnips ---------------------------------------------------------------{{{
+  let g:UltiSnipsExpandTrigger="<tab>"
+  let g:UltiSnipsJumpForwardTrigger="<tab>"
+  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+"}}}
+
 " Depolete ----------------------------------------------------------------{{{
 
   let g:deoplete#enable_at_startup = 1
@@ -151,6 +161,7 @@
   if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
   endif
+  call deoplete#custom#set('ultisnips', 'matchers', ['matcher_fuzzy'])
 
   " Close the documentation window when completion is done
   autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
@@ -166,12 +177,15 @@
 	let g:lua_complete_dynamic = 0
 	let g:lua_define_completion_mappings = 0
 
+  let g:deoplete#sources={}
+  let g:deoplete#sources._=['buffer', 'file', 'ultisnips']
+
   if !exists('g:deoplete#omni#functions')
     let g:deoplete#omni#functions = {}
   endif
 	let g:deoplete#omni#functions.lua = 'xolox#lua#omnifunc'
 "}}}
-"
+
 " Theme -------------------------------------------------------------------{{{
 
   syntax on
