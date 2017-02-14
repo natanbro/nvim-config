@@ -33,9 +33,6 @@
   call dein#add('flazz/vim-colorschemes')
   call dein#add('felixhummel/setcolors.vim')
 
-" traverse
-  call dein#add('Shougo/vimfiler.vim')
-
 " git
   call dein#add('tpope/vim-fugitive')
   call dein#add('Xuyuanp/nerdtree-git-plugin')
@@ -49,7 +46,6 @@
   call dein#add('zchee/deoplete-jedi') " python
   call dein#add('racer-rust/vim-racer') " rust
   call dein#add('xolox/vim-lua-ftplugin') " lua
-  call dein#add('amitab/vim-unite-cscope') " cscope
 
 " IDE
   call dein#add('davidhalter/jedi-vim') " python
@@ -58,11 +54,8 @@
   call dein#add('tpope/vim-surround')
   call dein#add('ficoos/plumb.vim')
 
-" unite
-  call dein#add('Shougo/unite.vim')
-  call dein#add('Shougo/unite-outline')
-  call dein#add('ujihisa/unite-colorscheme')
-  call dein#add('osyo-manga/unite-quickfix')
+" denite
+  call dein#add('Shougo/denite.nvim')
 
 " config
   call dein#add('editorconfig/editorconfig-vim')
@@ -120,19 +113,17 @@
   set cursorline
 "}}}
 
-" Unite -------------------------------------------------------------------{{{
+" Denite ------------------------------------------------------------------{{{
 
-  let g:unite_data_directory='~/.config/nvim/cache/unite'
-  let g:unite_prompt='» '
+	call denite#custom#option('default', 'prompt', '»')
 
-  autocmd FileType unite nmap <esc> <Plug>(unite_exit)
-
-  nnoremap <silent> <c-p> :Unite -auto-resize -start-insert -direction=botright file_rec/async<CR>
-  nnoremap <silent> <c-j> :Unite -auto-resize -start-insert -direction=botright location_list<CR>
-  nnoremap <silent> <a-p> :Unite -auto-resize -start-insert -direction=botright vimgrep<CR>
+  nnoremap <silent> <c-p> :Denite -auto-resize -direction=botright file_rec<CR>
+  nnoremap <silent> <c-j> :Denite -auto-resize -direction=botright location_list<CR>
+  nnoremap <silent> <a-p> :Denite -auto-resize -direction=botright grep<CR>
   nnoremap <silent> <leader>u :call dein#update()<CR>
-  let g:unite_source_rec_async_command = ['ag',
-        \ '--follow',
+  call denite#custom#var('file_rec', 'command',
+        \['ag',
+        \'--follow',
         \'--nocolor',
         \'--nogroup',
         \'--hidden',
@@ -143,7 +134,7 @@
         \'--ignore-dir', 'node_modules',
         \'--ignore-dir', 'bower_components',
         \'--ignore-dir', 'tmp',
-        \]
+        \])
 "}}}
 
 " Vim format --------------------------------------------------------------{{{
