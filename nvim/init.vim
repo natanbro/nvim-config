@@ -119,7 +119,21 @@
 
 " Denite ------------------------------------------------------------------{{{
 
-	call denite#custom#option('default', 'prompt', '»')
+  call denite#custom#option('default', 'prompt', '»')
+
+  " Change mappings.
+  call denite#custom#map(
+  \ 'insert',
+  \ '<down>',
+  \ '<denite:move_to_next_line>',
+  \ 'noremap'
+  \)
+  call denite#custom#map(
+  \ 'insert',
+  \ '<up>',
+  \ '<denite:move_to_previous_line>',
+  \ 'noremap'
+  \)
 
   nnoremap <silent> <c-p> :Denite -auto-resize -direction=botright file_rec<CR>
   nnoremap <silent> <c-j> :Denite -auto-resize -direction=botright location_list<CR>
