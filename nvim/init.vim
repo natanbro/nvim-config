@@ -161,7 +161,7 @@
 "}}}
 
 " UltiSnips ---------------------------------------------------------------{{{
-  let g:UltiSnipsExpandTrigger="<tab>"
+  let g:UltiSnipsExpandTrigger="<c-s-a-d>"
   let g:UltiSnipsJumpForwardTrigger="<tab>"
   let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 "}}}
