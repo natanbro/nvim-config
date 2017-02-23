@@ -60,6 +60,7 @@
 
 " denite
   call dein#add('Shougo/denite.nvim')
+  call dein#add('nixprime/cpsm')
 
 " config
   call dein#add('editorconfig/editorconfig-vim')
@@ -120,6 +121,8 @@
 " Denite ------------------------------------------------------------------{{{
 
   call denite#custom#option('default', 'prompt', '»')
+	call denite#custom#source(
+        \ 'default', 'matchers', ['matcher_cpsm'])
 
   " Change mappings.
   call denite#custom#map(
