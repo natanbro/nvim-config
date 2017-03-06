@@ -147,15 +147,7 @@
         \'--follow',
         \'--nocolor',
         \'--nogroup',
-        \'--hidden',
-        \'-g', '',
-        \'--ignore', '.git',
-        \'--ignore', '*.png',
-        \'--ignore', 'lib',
-        \'--ignore-dir', 'node_modules',
-        \'--ignore-dir', 'bower_components',
-        \'--ignore-dir', 'tmp',
-        \])
+        \'-g', ''])
 "}}}
 
 " Vim format --------------------------------------------------------------{{{
