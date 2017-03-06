@@ -44,7 +44,6 @@
 " autocomplete
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('zchee/deoplete-jedi') " python
-  call dein#add('racer-rust/vim-racer') " rust
   call dein#add('xolox/vim-lua-ftplugin') " lua
 
 " snippets
@@ -53,6 +52,8 @@
 
 " IDE
   call dein#add('davidhalter/jedi-vim') " python
+  call dein#add('junegunn/fzf')
+  call dein#add('autozimu/LanguageClient-neovim')
 
 " movement
   call dein#add('tpope/vim-surround')
@@ -186,7 +187,9 @@
 	let g:lua_complete_dynamic = 0
 	let g:lua_define_completion_mappings = 0
 
-  let g:deoplete#sources={}
+  if !exists('g:deoplete#sources')
+    let g:deoplete#sources={}
+  endif
   let g:deoplete#sources._=['buffer', 'file', 'ultisnips']
 
   if !exists('g:deoplete#omni#functions')
@@ -257,6 +260,14 @@
   let g:neomake_rust_enabled_makers = []
   autocmd BufWritePost *.rs Neomake! cargo
   let g:racer_cmd = $HOME."/.cargo/bin/racer"
+  let g:LanguageClient_serverCommands = {
+    \ 'rust': ['cargo', 'run', '--release', '--manifest-path=/home/smizrahi/Projects/rls/Cargo.toml'],
+    \ }
+
+
+  nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+  nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+  nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 "}}}
 
 " neomake -----------------------------------------------------------------{{{
