@@ -251,9 +251,11 @@
 
   map <C-\> :VimFiler -project -explorer<CR>
 
-" racer -------------------------------------------------------------------{{{
+" rust --------------------------------------------------------------------{{{
 
   set hidden
+  let g:neomake_rust_enabled_makers = []
+  autocmd BufWritePost *.rs Neomake! cargo
   let g:racer_cmd = $HOME."/.cargo/bin/racer"
 "}}}
 
