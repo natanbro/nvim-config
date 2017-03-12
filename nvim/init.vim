@@ -191,6 +191,7 @@
     let g:deoplete#sources={}
   endif
   let g:deoplete#sources._=['buffer', 'file', 'ultisnips']
+  let g:deoplete#sources.python=['buffer', 'file', 'ultisnips', 'jedi']
 
   if !exists('g:deoplete#omni#functions')
     let g:deoplete#omni#functions = {}
