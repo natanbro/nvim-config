@@ -19,6 +19,7 @@
 " aux
   call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
   call dein#add('xolox/vim-misc')
+  call dein#add('embear/vim-localvimrc')
 
 " syntax
   call dein#add('sheerun/vim-polyglot')
@@ -328,12 +329,6 @@
   set grepprg=ag\ --vimgrep
 "}}}
 
-" must be last
-" localconfig -------------------------------------------------------------{{{
-  let lvimrc_path=".lvimrc"
-  if filereadable(expand(lvimrc_path))
-    exec "source " . lvimrc_path
-  endif
-"}}}
+let g:localvimrc_whitelist=$HOME.'/[Pp]rojects/.*'
 
 " vim: set tabstop=2 shiftwidth=2 expandtab:
