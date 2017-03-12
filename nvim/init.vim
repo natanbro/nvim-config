@@ -263,7 +263,7 @@
   autocmd BufWritePost *.rs Neomake! cargo
   let g:racer_cmd = $HOME."/.cargo/bin/racer"
   let g:LanguageClient_serverCommands = {
-    \ 'rust': ['cargo', 'run', '--release', '--manifest-path=/home/smizrahi/Projects/rls/Cargo.toml'],
+    \ 'rust': ['cargo', 'run', '--release', '--manifest-path='.$HOME.'/.config/nvim/rust/rls/Cargo.toml'],
     \ }
 
 
