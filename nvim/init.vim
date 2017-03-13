@@ -208,6 +208,7 @@
   set background=dark
   colorscheme gruvbox
   highlight CursorLine guifg=none guibg=none gui=NONE
+  highlight SpecialKey guifg=#ffffff guibg=none gui=NONE
 "}}}
 
 " vim-airline -------------------------------------------------------------{{{
@@ -293,6 +294,8 @@
   :highlight ExtraWhitespace ctermbg=darkgreen guibg=lightgreen
   :au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
   :au InsertLeave * match ExtraWhitespace /\s\+$/
+  :set listchars=tab:▸\ ,trail:·
+  :set list
 
 "}}}
 
