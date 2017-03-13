@@ -204,11 +204,11 @@
 " Theme -------------------------------------------------------------------{{{
 
   syntax on
-  let g:gruvbox_contrast_dark = "hard"
+  "let g:gruvbox_contrast_dark = "hard"
   set background=dark
-  colorscheme gruvbox
-  highlight CursorLine guifg=none guibg=none gui=NONE
-  highlight SpecialKey guifg=#ffffff guibg=none gui=NONE
+  colorscheme jellybeans
+  "highlight CursorLine guifg=none guibg=none gui=NONE
+  highlight SpecialKey ctermfg=lightgreen guibg=none gui=NONE
 "}}}
 
 " vim-airline -------------------------------------------------------------{{{
@@ -223,7 +223,7 @@
   let g:airline_right_sep = ''
   let g:airline_right_alt_sep = ''
   let g:airline_powerline_fonts = 0
-  let g:airline_theme='ubaryd'
+  let g:airline_theme='jellybeans'
 
   tmap <leader>/ <c-\><c-n>
   nmap <a-right> :bnext<CR>
