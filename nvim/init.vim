@@ -37,6 +37,7 @@
 " git
   call dein#add('tpope/vim-fugitive')
   call dein#add('Xuyuanp/nerdtree-git-plugin')
+  call dein#add('airblade/vim-gitgutter')
 
 " decorate
   call dein#add('vim-airline/vim-airline')
