@@ -124,7 +124,7 @@
 " Denite ------------------------------------------------------------------{{{
 
   call denite#custom#option('default', 'prompt', '»')
-	call denite#custom#source(
+  denite#custom#source(
         \ 'default', 'matchers', ['matcher_cpsm'])
 
   " Change mappings.
@@ -185,20 +185,21 @@
            \ deoplete#mappings#manual_complete()
   " lua
   let g:lua_check_syntax = 0
-	let g:lua_complete_omni = 1
-	let g:lua_complete_dynamic = 0
-	let g:lua_define_completion_mappings = 0
+  let g:lua_complete_omni = 1
+  let g:lua_complete_dynamic = 0
+  let g:lua_define_completion_mappings = 0
 
   if !exists('g:deoplete#sources')
     let g:deoplete#sources={}
   endif
   let g:deoplete#sources._=['buffer', 'file', 'ultisnips']
   let g:deoplete#sources.python=['buffer', 'file', 'ultisnips', 'jedi']
+  let g:deoplete#sources.rust=['ultisnips', 'LanguageClient']
 
   if !exists('g:deoplete#omni#functions')
     let g:deoplete#omni#functions = {}
   endif
-	let g:deoplete#omni#functions.lua = 'xolox#lua#omnifunc'
+  let g:deoplete#omni#functions.lua = 'xolox#lua#omnifunc'
 "}}}
 
 " Theme -------------------------------------------------------------------{{{
