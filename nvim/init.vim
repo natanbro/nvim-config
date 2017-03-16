@@ -124,7 +124,7 @@
 " Denite ------------------------------------------------------------------{{{
 
   call denite#custom#option('default', 'prompt', '»')
-  denite#custom#source(
+  call denite#custom#source(
         \ 'default', 'matchers', ['matcher_cpsm'])
 
   " Change mappings.
