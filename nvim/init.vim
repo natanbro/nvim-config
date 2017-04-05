@@ -59,6 +59,7 @@
   call dein#add('junegunn/fzf')
   call dein#add('autozimu/LanguageClient-neovim')
   call dein#add('itchyny/vim-cursorword') " highlight word under cursor
+  call dein#add('scrooloose/nerdtree')
 
 " movement
   call dein#add('tpope/vim-surround')
@@ -260,11 +261,20 @@
   nmap <leader>9 <Plug>AirlineSelectTab9
 "}}}
 
-" vimfiler ----------------------------------------------------------------{{{
+" nerdtree ----------------------------------------------------------------{{{
+  function IsNerdTreeEnabled()
+    return exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1
+  endfunction
 
-  :let g:vimfiler_as_default_explorer = 1
+  function NERDTreeFindToggle()
+    if IsNerdTreeEnabled()
+      :NERDTreeClose
+    else
+      :NERDTreeFind
+    endif
+  endfunction
 
-  map <C-\> :VimFiler -project -explorer<CR>
+  nnoremap <silent> <C-\> :call NERDTreeFindToggle()<CR>
 
 " rust --------------------------------------------------------------------{{{
 
