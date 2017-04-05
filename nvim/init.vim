@@ -164,7 +164,7 @@
 "}}}
 
 " UltiSnips ---------------------------------------------------------------{{{
-  let g:UltiSnipsExpandTrigger="<c-s-a-d>"
+  let g:UltiSnipsExpandTrigger="<tab>"
   let g:UltiSnipsJumpForwardTrigger="<tab>"
   let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 "}}}
@@ -182,7 +182,6 @@
 
   " Close the documentation window when completion is done
   autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-  inoremap <silent><expr> <tab> pumvisible() ? '<down><return>' : "\t"
 
   " map ctrl+space for complete
   inoremap <silent><expr> <c-space>
