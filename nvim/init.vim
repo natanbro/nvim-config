@@ -58,6 +58,7 @@
   call dein#add('davidhalter/jedi-vim') " python
   call dein#add('junegunn/fzf')
   call dein#add('autozimu/LanguageClient-neovim')
+  call dein#add('itchyny/vim-cursorword') " highlight word under cursor
 
 " movement
   call dein#add('tpope/vim-surround')
