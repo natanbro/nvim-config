@@ -45,6 +45,7 @@
 
 " autocomplete
   call dein#add('Shougo/deoplete.nvim')
+  call dein#add('Shougo/echodoc.vim')
   call dein#add('zchee/deoplete-jedi') " python
   call dein#add('xolox/vim-lua-ftplugin') " lua
 
@@ -334,6 +335,16 @@
   set grepprg=ag\ --vimgrep
 "}}}
 
-let g:localvimrc_whitelist=$HOME.'/[Pp]rojects/.*'
+" echodoc -----------------------------------------------------------------{{{
+  set noshowmode
+  let g:echodoc_enable_at_startup = 1
+"}}}
+
+" syonara -----------------------------------------------------------------{{{
+    let g:sayonara_filetypes = {
+        \ 'nerdtree': 'NERDTreeClose',
+        \ }
+"}}}
+
 
 " vim: set tabstop=2 shiftwidth=2 expandtab:
