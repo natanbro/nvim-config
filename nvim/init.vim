@@ -48,6 +48,7 @@
   call dein#add('Shougo/echodoc.vim')
   call dein#add('zchee/deoplete-jedi') " python
   call dein#add('xolox/vim-lua-ftplugin') " lua
+  call dein#add('zchee/deoplete-clang') " C/C++
 
 " snippets
   call dein#add('SirVer/ultisnips')
@@ -196,6 +197,10 @@
   let g:deoplete#sources._=['buffer', 'file', 'ultisnips']
   let g:deoplete#sources.python=['buffer', 'file', 'ultisnips', 'jedi']
   let g:deoplete#sources.rust=['ultisnips', 'LanguageClient']
+  let g:deoplete#sources.cpp=['ultisnips', 'clang']
+  let g:deoplete#sources.c=['ultisnips', 'clang']
+  let g:deoplete#sources#clang#libclang_path='/usr/lib64/libclang.so'
+  let g:deoplete#sources#clang#clang_header='/usr/lib64/clang/'
 
   if !exists('g:deoplete#omni#functions')
     let g:deoplete#omni#functions = {}
