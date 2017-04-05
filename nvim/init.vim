@@ -217,8 +217,7 @@
   "let g:gruvbox_contrast_dark = "hard"
   set background=dark
   colorscheme jellybeans
-  "highlight CursorLine guifg=none guibg=none gui=NONE
-  highlight SpecialKey ctermfg=lightgreen guibg=none gui=NONE
+  highlight SpecialKey ctermfg=darkgrey guibg=none gui=NONE
 "}}}
 
 " vim-airline -------------------------------------------------------------{{{
