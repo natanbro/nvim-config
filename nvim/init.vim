@@ -220,6 +220,11 @@
   highlight SpecialKey ctermfg=darkgrey guibg=none gui=NONE
 "}}}
 
+" IDE ---------------------------------------------------------------------{{{
+  nmap <f9> :wa<bar>make<CR>
+  nmap <f5> :enew<CR>:call termopen(runprg, {'name': '[execution]'})<CR>
+"}}}
+
 " vim-airline -------------------------------------------------------------{{{
 
   let g:airline#extensions#tabline#enabled = 1
