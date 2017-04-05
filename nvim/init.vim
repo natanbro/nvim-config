@@ -245,6 +245,8 @@
   tmap <a-right> <C-\><C-n>:bprevious<CR>
   tmap <a-left> <C-\><C-n>:bprevious<CR>
   nmap <leader>q :Sayonara<CR>
+  nmap <leader>c :bp<bar>sp<bar>bn<bar>bd<CR>
+  nmap <leader>C :bp<bar>sp<bar>bn<bar>bd!<CR>
   cnoreabbrev <expr> q getcmdtype() == ":" && getcmdline() == 'q' ? 'Sayonara' : 'q'
   tmap <leader>1  <C-\><C-n><Plug>AirlineSelectTab1
   tmap <leader>2  <C-\><C-n><Plug>AirlineSelectTab2
