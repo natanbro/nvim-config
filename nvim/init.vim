@@ -340,6 +340,7 @@
   endif
 
   nmap <leader>] :cs find s <C-R>=expand("<cword>")<CR><CR>
+  nmap <leader>d <c-w>}
 "}}}
 
 " plumb -------------------------------------------------------------------{{{
