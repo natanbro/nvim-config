@@ -375,4 +375,17 @@
   let g:localvimrc_whitelist=$HOME.'/[Pp]rojects/.*'
 "}}}
 
+" cscope ------------------------------------------------------------------{{{
+
+  function! RefreshCScope()
+    if filereadable(".cscope")
+      :silent exec "!./.cscope"
+      :cscope reset
+    endif
+  endfunction
+
+  autocmd! BufWritePost * call RefreshCScope()
+
+"}}}
+
 " vim: set tabstop=2 shiftwidth=2 expandtab:
