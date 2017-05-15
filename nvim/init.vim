@@ -221,7 +221,7 @@
 "}}}
 
 " IDE ---------------------------------------------------------------------{{{
-  nmap <f9> :wa<bar>make<CR>
+  nmap <f6> :wa<bar>make<CR>
   nmap <f5> :enew<CR>:call termopen(runprg, {'name': '[execution]'})<CR>
 "}}}
 
