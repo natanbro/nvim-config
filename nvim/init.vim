@@ -5,13 +5,7 @@
 "}}}
 
 " Setup Vim-Plug ----------------------------------------------------------{{{
-":  if (!isdirectory(expand("$HOME/.config/nvim/repos/github.com/Shougo/dein.vim")))
-":    call system(expand("mkdir -p $HOME/.config/nvim/repos/github.com"))
-":    call system(expand("git clone https://github.com/Shougo/dein.vim $HOME/.config/nvim/repos/github.com/Shougo/dein.vim"))
-":  endif
-call plug#begin('~/.local/share/nvim/plugged')
-
-  Plug 'Shougo/dein.vim'
+  call plug#begin('~/.local/share/nvim/plugged')
 
 " aux
   Plug 'Shougo/vimproc.vim', {'build' : 'make'}
@@ -42,10 +36,12 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'vim-airline/vim-airline-themes'
 
 " autocomplete
-  Plug 'Shougo/deoplete.nvim'
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'zchee/deoplete-jedi' " python
   Plug 'xolox/vim-lua-ftplugin' " lua
   Plug 'zchee/deoplete-clang' " C/C++
+  Plug 'fatih/vim-go' " go
+  Plug 'zchee/deoplete-go', {'do': 'make'}
 
 " snippets
   Plug 'SirVer/ultisnips'
@@ -58,6 +54,7 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'itchyny/vim-cursorword' " highlight word under cursor
   Plug 'scrooloose/nerdtree'
   Plug 'dbgx/lldb.nvim'
+  Plug 'powerman/vim-plugin-viewdoc' " Doc integration
 
 " movement
   Plug 'tpope/vim-surround'
@@ -195,6 +192,7 @@ call plug#begin('~/.local/share/nvim/plugged')
   let g:deoplete#sources.rust=['ultisnips', 'LanguageClient']
   let g:deoplete#sources.cpp=['ultisnips', 'clang']
   let g:deoplete#sources.c=['ultisnips', 'clang']
+  let g:deoplete#sources.go=['ultisnips', 'go']
   let g:deoplete#sources#clang#libclang_path='/usr/lib64/libclang.so'
   let g:deoplete#sources#clang#clang_header='/usr/lib64/clang/'
 
@@ -335,6 +333,13 @@ call plug#begin('~/.local/share/nvim/plugged')
   nmap <leader>] :cs find s <C-R>=expand("<cword>")<CR><CR>
   nmap <leader>d <c-w>}
 "}}}
+" viewdic -------------------------------------------------------------------{{{
+  let g:no_plugin_maps = 1
+  let g:viewdoc_open='new'
+  let g:viewdoc_only=1
+  nmap <leader>D :doc! <cword><CR>
+  let g:viewdoc_godoc_cmd='go doc'
+"
 
 " plumb -------------------------------------------------------------------{{{
 
