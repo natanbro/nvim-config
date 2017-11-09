@@ -11,12 +11,15 @@ sudo dnf install -y \
 	${NULL}
 
 echo Setting up python venv
-pyenv3=$(rpm -ql python3-virtualenv | grep /usr/bin/virtualenv-)
-pyenv2=$(rpm -ql python-virtualenv | grep /usr/bin/virtualenv-)
+
+mkdir -p ~/.config/nvim/
 
 pushd ~/.config/nvim
-$pyenv3 pyenv3
+virtualenv-3 ./pyenv3
 pyenv3/bin/pip install --upgrade neovim
-$pyenv2 pyenv2
+virtualenv-2 ./pyenv2
 pyenv2/bin/pip install --upgrade neovim
 popd
+
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

@@ -4,82 +4,74 @@
   let g:python3_host_prog = $HOME.'/.config/nvim/pyenv3/bin/python'
 "}}}
 
-" Setup NeoBundle  --------------------------------------------------------{{{
+" Setup Vim-Plug ----------------------------------------------------------{{{
+":  if (!isdirectory(expand("$HOME/.config/nvim/repos/github.com/Shougo/dein.vim")))
+":    call system(expand("mkdir -p $HOME/.config/nvim/repos/github.com"))
+":    call system(expand("git clone https://github.com/Shougo/dein.vim $HOME/.config/nvim/repos/github.com/Shougo/dein.vim"))
+":  endif
+call plug#begin('~/.local/share/nvim/plugged')
 
-  if (!isdirectory(expand("$HOME/.config/nvim/repos/github.com/Shougo/dein.vim")))
-    call system(expand("mkdir -p $HOME/.config/nvim/repos/github.com"))
-    call system(expand("git clone https://github.com/Shougo/dein.vim $HOME/.config/nvim/repos/github.com/Shougo/dein.vim"))
-  endif
-
-  set runtimepath+=~/.config/nvim/repos/github.com/Shougo/dein.vim/
-  call dein#begin(expand('~/.config/nvim'))
-
-  call dein#add('Shougo/dein.vim')
+  Plug 'Shougo/dein.vim'
 
 " aux
-  call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
-  call dein#add('xolox/vim-misc')
-  call dein#add('embear/vim-localvimrc')
+  Plug 'Shougo/vimproc.vim', {'build' : 'make'}
+  Plug 'xolox/vim-misc'
+  Plug 'embear/vim-localvimrc'
 
 " syntax
-  call dein#add('sheerun/vim-polyglot')
-  call dein#add('benekastah/neomake')
-  call dein#add('Chiel92/vim-autoformat')
-  call dein#add('rust-lang/rust.vim')
+  Plug 'sheerun/vim-polyglot'
+  Plug 'benekastah/neomake'
+  Plug 'Chiel92/vim-autoformat'
+  Plug 'rust-lang/rust.vim'
 
 " buffer management
-  call dein#add('mhinz/vim-sayonara')
+  Plug 'mhinz/vim-sayonara'
 
 " color
-  call dein#add('mhartington/oceanic-next')
-  call dein#add('flazz/vim-colorschemes')
-  call dein#add('felixhummel/setcolors.vim')
+  Plug 'mhartington/oceanic-next'
+  Plug 'flazz/vim-colorschemes'
+  Plug 'felixhummel/setcolors.vim'
 
 " git
-  call dein#add('tpope/vim-fugitive')
-  call dein#add('Xuyuanp/nerdtree-git-plugin')
-  call dein#add('airblade/vim-gitgutter')
+  Plug 'tpope/vim-fugitive'
+  Plug 'Xuyuanp/nerdtree-git-plugin'
+  Plug 'airblade/vim-gitgutter'
 
 " decorate
-  call dein#add('vim-airline/vim-airline')
-  call dein#add('vim-airline/vim-airline-themes')
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
 
 " autocomplete
-  call dein#add('Shougo/deoplete.nvim')
-  call dein#add('zchee/deoplete-jedi') " python
-  call dein#add('xolox/vim-lua-ftplugin') " lua
-  call dein#add('zchee/deoplete-clang') " C/C++
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'zchee/deoplete-jedi' " python
+  Plug 'xolox/vim-lua-ftplugin' " lua
+  Plug 'zchee/deoplete-clang' " C/C++
 
 " snippets
-  call dein#add('SirVer/ultisnips')
-  call dein#add('honza/vim-snippets')
+  Plug 'SirVer/ultisnips'
+  Plug 'honza/vim-snippets'
 
 " IDE
-  call dein#add('davidhalter/jedi-vim') " python
-  call dein#add('junegunn/fzf')
-  call dein#add('autozimu/LanguageClient-neovim')
-  call dein#add('itchyny/vim-cursorword') " highlight word under cursor
-  call dein#add('scrooloose/nerdtree')
-  call dein#add('dbgx/lldb.nvim')
+  Plug 'davidhalter/jedi-vim' " python
+  Plug 'junegunn/fzf'
+  Plug 'autozimu/LanguageClient-neovim'
+  Plug 'itchyny/vim-cursorword' " highlight word under cursor
+  Plug 'scrooloose/nerdtree'
+  Plug 'dbgx/lldb.nvim'
 
 " movement
-  call dein#add('tpope/vim-surround')
-  call dein#add('ficoos/plumb.vim')
+  Plug 'tpope/vim-surround'
+  Plug 'ficoos/plumb.vim'
 
 " denite
-  call dein#add('Shougo/denite.nvim')
-  call dein#add('nixprime/cpsm')
+  Plug 'Shougo/denite.nvim'
+  Plug 'nixprime/cpsm'
 
 " config
-  call dein#add('editorconfig/editorconfig-vim')
+  Plug 'editorconfig/editorconfig-vim'
 
 " finish set up
-  if dein#check_install()
-    call dein#install()
-    let pluginsExist=1
-  endif
-
-  call dein#end()
+  call plug#end()
   filetype plugin indent on
 
 "}}}
@@ -150,7 +142,7 @@
   nnoremap <silent> <c-j> :Denite -auto-resize -direction=botright location_list<CR>
   nnoremap <silent> <a-p> :DeniteCursorWord -auto-resize -direction=botright grep<CR>
   nnoremap <silent> <a-s-p> :Denite -auto-resize -direction=botright grep<CR>
-  nnoremap <silent> <leader>u :call dein#update()<CR>
+  nnoremap <silent> <leader>u :PlugInstall<CR>
   call denite#custom#var('file_rec', 'command',
         \['ag',
         \'--follow',
