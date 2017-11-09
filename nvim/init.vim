@@ -25,6 +25,7 @@
   call dein#add('sheerun/vim-polyglot')
   call dein#add('benekastah/neomake')
   call dein#add('Chiel92/vim-autoformat')
+  call dein#add('rust-lang/rust.vim')
 
 " buffer management
   call dein#add('mhinz/vim-sayonara')
@@ -45,7 +46,6 @@
 
 " autocomplete
   call dein#add('Shougo/deoplete.nvim')
-  call dein#add('Shougo/echodoc.vim')
   call dein#add('zchee/deoplete-jedi') " python
   call dein#add('xolox/vim-lua-ftplugin') " lua
   call dein#add('zchee/deoplete-clang') " C/C++
@@ -60,6 +60,7 @@
   call dein#add('autozimu/LanguageClient-neovim')
   call dein#add('itchyny/vim-cursorword') " highlight word under cursor
   call dein#add('scrooloose/nerdtree')
+  call dein#add('dbgx/lldb.nvim')
 
 " movement
   call dein#add('tpope/vim-surround')
@@ -357,11 +358,6 @@
 
 " ag ----------------------------------------------------------------------{{{
   set grepprg=ag\ --vimgrep
-"}}}
-
-" echodoc -----------------------------------------------------------------{{{
-  set noshowmode
-  let g:echodoc_enable_at_startup = 1
 "}}}
 
 " syonara -----------------------------------------------------------------{{{
