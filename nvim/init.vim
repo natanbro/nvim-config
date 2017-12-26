@@ -8,7 +8,7 @@
   call plug#begin('~/.local/share/nvim/plugged')
 
 " aux
-  Plug 'Shougo/vimproc.vim', {'build' : 'make'}
+  Plug 'Shougo/vimproc.vim', {'do' : 'make'}
   Plug 'xolox/vim-misc'
   Plug 'embear/vim-localvimrc'
 
