@@ -53,7 +53,7 @@
   Plug 'autozimu/LanguageClient-neovim'
   Plug 'itchyny/vim-cursorword' " highlight word under cursor
   Plug 'scrooloose/nerdtree'
-  Plug 'dbgx/lldb.nvim'
+  Plug 'idanarye/vim-vebugger'
   Plug 'powerman/vim-plugin-viewdoc' " Doc integration
 
 " movement
