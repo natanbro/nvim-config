@@ -240,7 +240,7 @@
   let g:airline_powerline_fonts = 0
   let g:airline_theme='jellybeans'
 
-  tmap <leader>/ <c-\><c-n>
+  tmap <esc><esc> <c-\><c-n>
   "nmap <a-right> :bnext<CR>
   "nmap <a-left> :bprevious<CR>
   "tmap <a-right> <C-\><C-n>:bprevious<CR>
