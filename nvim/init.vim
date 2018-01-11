@@ -354,10 +354,11 @@
   nmap <leader>] :cs find s <C-R>=expand("<cword>")<CR><CR>
   nmap <leader>d <c-w>}
 "}}}
-" viewdic -------------------------------------------------------------------{{{
+" viewdoc -------------------------------------------------------------------{{{
   let g:no_plugin_maps = 1
   let g:viewdoc_open='new'
   let g:viewdoc_only=1
+  let g:viewdoc_openempty=0
   nmap <leader>D :doc! <cword><CR>
   let g:viewdoc_godoc_cmd='go doc'
 "
