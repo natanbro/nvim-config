@@ -74,6 +74,14 @@
 
 "}}}
 
+" Disable Arrow keys in Escape mode ---------------------------------------{{{
+  map <up> <nop>
+  map <down> <nop>
+  map <left> <nop>
+  map <right> <nop>
+
+"}}}
+
 " Python development ------------------------------------------------------{{{
 
   let g:neomake_python_enabled_makers = ['flake8']
@@ -233,10 +241,14 @@
   let g:airline_theme='jellybeans'
 
   tmap <leader>/ <c-\><c-n>
-  nmap <a-right> :bnext<CR>
-  nmap <a-left> :bprevious<CR>
-  tmap <a-right> <C-\><C-n>:bprevious<CR>
-  tmap <a-left> <C-\><C-n>:bprevious<CR>
+  "nmap <a-right> :bnext<CR>
+  "nmap <a-left> :bprevious<CR>
+  "tmap <a-right> <C-\><C-n>:bprevious<CR>
+  "tmap <a-left> <C-\><C-n>:bprevious<CR>
+  nmap <a-l> :bnext<CR>
+  nmap <a-h> :bprevious<CR>
+  tmap <a-l> <C-\><C-n>:bprevious<CR>
+  tmap <a-h> <C-\><C-n>:bprevious<CR>
   nmap <leader>q :Sayonara<CR>
   nmap <leader>c :bp<bar>sp<bar>bn<bar>bd<CR>
   nmap <leader>C :bp<bar>sp<bar>bn<bar>bd!<CR>
@@ -306,8 +318,10 @@
 " keyboard short-cuts -----------------------------------------------------{{{
 
   nmap <leader>t :term<cr>
-  nmap <silent> <c-s-up> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
-  nmap <c-s-down> ddp
+  "nmap <silent> <c-s-up> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
+  "nmap <c-s-down> ddp
+  nmap <silent> <c-s-k> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
+  nmap <c-s-j> ddp
   nmap <c-s> :w<CR>
   vmap <leader>y "+y
 "}}}
