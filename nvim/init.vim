@@ -85,6 +85,7 @@
 " Python development ------------------------------------------------------{{{
 
   let g:neomake_python_enabled_makers = ['flake8']
+  call neomake#configure#automake('nw', 750)
   " we use deoplete-jedi
   let g:jedi#completions_enabled = 0
   " autocmd BufWinEnter '__doc__' setlocal bufhidden=delete
