@@ -39,7 +39,7 @@
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'zchee/deoplete-jedi' " python
   Plug 'xolox/vim-lua-ftplugin' " lua
-  Plug 'zchee/deoplete-clang' " C/C++
+  Plug 'tweekmonster/deoplete-clang2' " C/C++
   Plug 'fatih/vim-go' " go
   Plug 'zchee/deoplete-go', {'do': 'make'}
 
@@ -100,7 +100,17 @@
 "}}}
 
 " C/C++ Development -------------------------------------------------------{{{
-  let g:neomake_c_enabled_makers = ['clangcheck']
+  let g:neomake_c_enabled_makers = ['clang']
+  let linter = neomake#makers#ft#c#clang()
+  function linter.fn(jobinfo) abort
+    let maker = copy(self)
+    if filereadable('.clang')
+      let maker.args += split(join(readfile('.clang'), "\n"))
+    endif
+    return maker
+  endfunction
+
+  let g:neomake_c_clang_maker = linter
 "}}}
 
 " General -----------------------------------------------------------------{{{
