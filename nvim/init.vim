@@ -39,9 +39,9 @@
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'zchee/deoplete-jedi' " python
   Plug 'xolox/vim-lua-ftplugin' " lua
-  Plug 'tweekmonster/deoplete-clang2' " C/C++
   Plug 'fatih/vim-go' " go
   Plug 'zchee/deoplete-go', {'do': 'make'}
+  Plug 'Valloric/YouCompleteMe', {'do': './install.py --all'}
 
 " snippets
   Plug 'SirVer/ultisnips'
