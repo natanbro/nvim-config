@@ -335,6 +335,7 @@
   nmap <c-s-j> ddp
   nmap <c-s> :w<CR>
   vmap <leader>y "+y
+  nmap <F12> :nohl<CR>
 "}}}
 
 " extra whitespace --------------------------------------------------------{{{
