@@ -100,6 +100,7 @@
 "}}}
 
 " C/C++ Development -------------------------------------------------------{{{
+  let g:ycm_confirm_extra_conf = 0
   let g:neomake_c_enabled_makers = ['clang']
   let linter = neomake#makers#ft#c#clang()
   function linter.fn(jobinfo) abort
@@ -133,6 +134,9 @@
 " line numbering
   set number
   set cursorline
+
+" ide like save-on-build
+  set autowrite
 "}}}
 
 " Denite ------------------------------------------------------------------{{{
@@ -177,6 +181,12 @@
   let g:UltiSnipsExpandTrigger="<tab>"
   let g:UltiSnipsJumpForwardTrigger="<tab>"
   let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+"}}}
+
+" YouCompleteMe -----------------------------------------------------------{{{
+  let g:ycm_filetype_specific_completion_to_disable = {
+    \ 'go': 1
+    \}
 "}}}
 
 " Depolete ----------------------------------------------------------------{{{
