@@ -42,7 +42,7 @@
   Plug 'xolox/vim-lua-ftplugin' " lua
   Plug 'fatih/vim-go' " go
   Plug 'zchee/deoplete-go', {'do': 'make'}
-  Plug 'Valloric/YouCompleteMe', {'do': './install.py --all'}
+  Plug 'Valloric/YouCompleteMe', {'do': './install.py --clang-completer'}
 
 " snippets
   Plug 'SirVer/ultisnips'
@@ -200,7 +200,7 @@
   if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
   endif
-  call deoplete#custom#set('ultisnips', 'matchers', ['matcher_fuzzy'])
+  call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
 
   " Close the documentation window when completion is done
   autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
@@ -255,6 +255,7 @@
   let g:airline#extensions#tabline#fnamemod = ':t'
   let g:airline#extensions#tabline#show_tab_nr = 1
   let g:airline#extensions#tabline#buffer_idx_mode = 1
+  let g:airline#extensions#tabline#show_tabs = 1
   let g:airline_left_sep = ''
   let g:airline_left_alt_sep = ''
   let g:airline_right_sep = ''
