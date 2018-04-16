@@ -20,6 +20,7 @@
 
 " buffer management
   Plug 'mhinz/vim-sayonara'
+  Plug 'moll/vim-bbye'
 
 " color
   Plug 'mhartington/oceanic-next'
@@ -271,8 +272,7 @@
   tmap <a-l> <C-\><C-n>:bprevious<CR>
   tmap <a-h> <C-\><C-n>:bprevious<CR>
   nmap <leader>q :Sayonara<CR>
-  nmap <leader>c :bp<bar>sp<bar>bn<bar>bd<CR>
-  nmap <leader>C :bp<bar>sp<bar>bn<bar>bd!<CR>
+  nmap <leader>c :Bdelete<CR>
   cnoreabbrev <expr> q getcmdtype() == ":" && getcmdline() == 'q' ? 'Sayonara' : 'q'
   tmap <leader>1  <C-\><C-n><Plug>AirlineSelectTab1
   tmap <leader>2  <C-\><C-n><Plug>AirlineSelectTab2
