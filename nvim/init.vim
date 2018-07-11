@@ -379,6 +379,7 @@
   endif
 
   nmap <leader>] :cs find s <C-R>=expand("<cword>")<CR><CR>
+  nmap <leader>[ :cs find c <C-R>=expand("<cword>")<CR><CR>
   nmap <leader>d <c-w>}
 "}}}
 " viewdoc -------------------------------------------------------------------{{{
