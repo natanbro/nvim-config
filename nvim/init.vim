@@ -384,8 +384,8 @@
 "}}}
 " viewdoc -------------------------------------------------------------------{{{
   let g:no_plugin_maps = 1
-  let g:viewdoc_open='new'
-  let g:viewdoc_only=1
+  let g:viewdoc_open='edit'
+  let g:viewdoc_only=0
   let g:viewdoc_openempty=0
   nmap <leader>D :doc! <cword><CR>
   let g:viewdoc_godoc_cmd='go doc'
