@@ -51,7 +51,10 @@
 " IDE
   Plug 'davidhalter/jedi-vim' " python
   Plug 'junegunn/fzf'
-  Plug 'autozimu/LanguageClient-neovim'
+  Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
   Plug 'itchyny/vim-cursorword' " highlight word under cursor
   Plug 'scrooloose/nerdtree'
   Plug 'idanarye/vim-vebugger'
