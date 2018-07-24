@@ -167,6 +167,7 @@
   nnoremap <silent> <c-j> :Denite -auto-resize -direction=botright location_list<CR>
   nnoremap <silent> <a-p> :DeniteCursorWord -auto-resize -direction=botright grep<CR>
   nnoremap <silent> <a-s-p> :Denite -auto-resize -direction=botright grep<CR>
+  nnoremap <silent> <c-a-o> :Denite -auto-resize -direction=botright outline<CR>
   nnoremap <silent> <leader>u :PlugUpdate<CR>
   nnoremap <leader>\ :Denite -auto-resize -direction=botright command<CR>
   call denite#custom#var('file_rec', 'command',
