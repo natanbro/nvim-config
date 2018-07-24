@@ -418,14 +418,14 @@
 
 " cscope ------------------------------------------------------------------{{{
 
-  function! RefreshCScope()
+  function! Rescope()
     if filereadable(".cscope")
       :silent exec "!./.cscope"
       :cscope reset
     endif
   endfunction
 
-  autocmd! BufWritePost * call RefreshCScope()
+  autocmd! BufWritePost * call Rescope()
 
 "}}}
 
