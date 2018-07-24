@@ -303,9 +303,6 @@
 " nerdtree ----------------------------------------------------------------{{{
   nmap <leader>o :TagbarToggle<CR>
 
-"}}}
-
-" nerdtree ----------------------------------------------------------------{{{
   function IsNerdTreeEnabled()
     return exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1
   endfunction
