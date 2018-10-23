@@ -1,14 +1,15 @@
 #!/bin/env sh
 echo Installing dependencies...
 sudo dnf install -y \
-	python-lldb \
+	clang-tools-extra \
 	git-all \
-	python-virtualenv \
+	python3-jedi \
 	python3-virtualenv \
+	python-jedi \
+	python-lldb \
+	python-virtualenv \
 	the_silver_searcher \
 	xsel \
-	python-jedi \
-	python3-jedi \
 	${NULL}
 
 echo Setting up python venv

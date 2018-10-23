@@ -19,7 +19,6 @@
   Plug 'rust-lang/rust.vim'
 
 " buffer management
-  Plug 'mhinz/vim-sayonara'
   Plug 'moll/vim-bbye'
 
 " color
@@ -37,12 +36,15 @@
   Plug 'vim-airline/vim-airline-themes'
 
 " autocomplete
+  Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+  Plug 'junegunn/fzf'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'zchee/deoplete-jedi' " python
   Plug 'xolox/vim-lua-ftplugin' " lua
   Plug 'fatih/vim-go' " go
-  Plug 'zchee/deoplete-go', {'do': 'make'}
-  Plug 'Valloric/YouCompleteMe', {'do': './install.py --clang-completer'}
 
 " snippets
   Plug 'SirVer/ultisnips'
@@ -50,16 +52,11 @@
 
 " IDE
   Plug 'davidhalter/jedi-vim' " python
-  Plug 'junegunn/fzf'
-  Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
   Plug 'itchyny/vim-cursorword' " highlight word under cursor
   Plug 'scrooloose/nerdtree'
-  Plug 'idanarye/vim-vebugger'
   Plug 'powerman/vim-plugin-viewdoc' " Doc integration
   Plug 'majutsushi/tagbar'
+  Plug 'Shougo/echodoc.vim'
 
 " movement
   Plug 'tpope/vim-surround'
@@ -75,14 +72,6 @@
 " finish set up
   call plug#end()
   filetype plugin indent on
-
-"}}}
-
-" Disable Arrow keys in Escape mode ---------------------------------------{{{
-  "map <up> <nop>
-  "map <down> <nop>
-  "map <left> <nop>
-  "map <right> <nop>
 
 "}}}
 
@@ -105,7 +94,6 @@
 
 " C/C++ Development -------------------------------------------------------{{{
   let g:ycm_confirm_extra_conf = 0
-  let g:neomake_c_enabled_makers = ['clang']
   let linter = neomake#makers#ft#c#clang()
   function linter.fn(jobinfo) abort
     let maker = copy(self)
@@ -143,6 +131,26 @@
   set autowrite
 "}}}
 
+" Plug --------------------------------------------------------------------{{{
+  function UpgradePlugins()
+    " TODO: update packages in nvim pyenvs
+    " upgrade vim-plug itself
+    :PlugUpgrade
+    " upgrade the vim-go binaries
+    :GoUpdateBinaries
+    " upgrade the go language server
+    :!go get -u github.com/sourcegraph/go-langserver
+    " upgrade the plugins
+    :PlugUpdate
+  endfunction
+  nnoremap <silent> <leader>u :call UpgradePlugins()<CR>
+"}}}
+
+" echodoc -----------------------------------------------------------------{{{
+  set cmdheight=2
+  let g:echodoc#enable_at_startup = 1
+  let g:echodoc#type = 'signature'
+"}}}
 " Denite ------------------------------------------------------------------{{{
 
   call denite#custom#option('default', 'prompt', '»')
@@ -168,7 +176,6 @@
   nnoremap <silent> <a-p> :DeniteCursorWord -auto-resize -direction=botright grep<CR>
   nnoremap <silent> <a-s-p> :Denite -auto-resize -direction=botright grep<CR>
   nnoremap <silent> <c-a-o> :Denite -auto-resize -direction=botright outline<CR>
-  nnoremap <silent> <leader>u :PlugUpdate<CR>
   nnoremap <leader>\ :Denite -auto-resize -direction=botright command<CR>
   call denite#custom#var('file_rec', 'command',
         \['ag',
@@ -226,11 +233,32 @@
   let g:deoplete#sources._=['buffer', 'file', 'ultisnips']
   let g:deoplete#sources.python=['buffer', 'file', 'ultisnips', 'jedi']
   let g:deoplete#sources.rust=['ultisnips', 'LanguageClient']
-  let g:deoplete#sources.cpp=['ultisnips', 'clang']
-  let g:deoplete#sources.c=['ultisnips', 'clang']
-  let g:deoplete#sources.go=['ultisnips', 'go']
+  let g:deoplete#sources.cpp=['ultisnips', 'LanguageClient']
+  let g:deoplete#sources.c=['ultisnips', 'LanguageClient']
+  let g:deoplete#sources.go=['ultisnips', 'LanguageClient']
   let g:deoplete#sources#clang#libclang_path='/usr/lib64/libclang.so'
   let g:deoplete#sources#clang#clang_header='/usr/lib64/clang/'
+
+function SetLSPShortcuts()
+  nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
+  nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
+  nnoremap <leader>lf :call LanguageClient#textDocument_formatting()<CR>
+  nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
+  nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
+  nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
+  nnoremap <leader>lc :call LanguageClient#textDocument_completion()<CR>
+  nnoremap <leader>lh :call LanguageClient#textDocument_hover()<CR>
+  nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
+  nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
+
+  nnoremap <F1> :call LanguageClient_contextMenu()<CR>
+  nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+endfunction()
+
+augroup LSP
+  autocmd!
+  autocmd FileType cpp,c,go,rust call SetLSPShortcuts()
+augroup END
 
   if !exists('g:deoplete#omni#functions')
     let g:deoplete#omni#functions = {}
@@ -277,9 +305,7 @@
   nmap <a-h> :bprevious<CR>
   tmap <a-l> <C-\><C-n>:bprevious<CR>
   tmap <a-h> <C-\><C-n>:bprevious<CR>
-  nmap <leader>q :Sayonara<CR>
   nmap <leader>c :Bdelete<CR>
-  cnoreabbrev <expr> q getcmdtype() == ":" && getcmdline() == 'q' ? 'Sayonara' : 'q'
   tmap <leader>1  <C-\><C-n><Plug>AirlineSelectTab1
   tmap <leader>2  <C-\><C-n><Plug>AirlineSelectTab2
   tmap <leader>3  <C-\><C-n><Plug>AirlineSelectTab3
@@ -325,12 +351,9 @@
   let g:racer_cmd = $HOME."/.cargo/bin/racer"
   let g:LanguageClient_serverCommands = {
     \ 'rust': ['cargo', 'run', '--release', '--manifest-path='.$HOME.'/.config/nvim/rust/rls/Cargo.toml'],
+    \ 'c'   : ['clangd'],
+    \ 'go'  : ['go-langserver'],
     \ }
-
-
-  nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-  nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-  nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 "}}}
 
 " neomake -----------------------------------------------------------------{{{
@@ -403,12 +426,6 @@
 
 " ag ----------------------------------------------------------------------{{{
   set grepprg=ag\ --vimgrep
-"}}}
-
-" syonara -----------------------------------------------------------------{{{
-    let g:sayonara_filetypes = {
-        \ 'nerdtree': 'NERDTreeClose',
-        \ }
 "}}}
 
 " lvimrc ------------------------------------------------------------------{{{
