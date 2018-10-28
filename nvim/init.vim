@@ -380,7 +380,7 @@ autocmd CompleteDone * call CompleteSnippet()
   let g:LanguageClient_serverCommands = {
     \ 'rust': ['cargo', 'run', '--release', '--manifest-path='.$HOME.'/.config/nvim/rust/rls/Cargo.toml'],
     \ 'c'   : ['clangd'],
-    \ 'go'  : ['go-langserver'],
+    \ 'go'  : ['go-langserver', '-gocodecompletion'],
     \ }
 "}}}
 
