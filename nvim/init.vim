@@ -191,9 +191,41 @@
 "}}}
 
 " UltiSnips ---------------------------------------------------------------{{{
-  let g:UltiSnipsExpandTrigger="<tab>"
-  let g:UltiSnipsJumpForwardTrigger="<tab>"
-  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+imap <silent><expr> <CR> pumvisible() ? "\<c-y>" : "\<cr>"
+
+let g:UltiSnipsExpandTrigger="<NUL>"
+let g:UltiSnipsListSnippets="<NUL>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+  let g:ulti_expand_res = 0 "default value, just set once
+
+function! CompleteSnippet()
+  if empty(v:completed_item)
+    return
+  endif
+
+  call UltiSnips#ExpandSnippet()
+  if g:ulti_expand_res > 0
+    return
+  endif
+
+  let l:complete = type(v:completed_item) == v:t_dict ? v:completed_item.word : v:completed_item
+  let l:comp_len = len(l:complete)
+
+  let l:cur_col = mode() == 'i' ? col('.') - 2 : col('.') - 1
+  let l:cur_line = getline('.')
+
+  let l:start = l:comp_len <= l:cur_col ? l:cur_line[:l:cur_col - l:comp_len] : ''
+  let l:end = l:cur_col < len(l:cur_line) ? l:cur_line[l:cur_col + 1 :] : ''
+
+  call setline('.', l:start . l:end)
+  call cursor('.', l:cur_col - l:comp_len + 2)
+
+  call UltiSnips#Anon(l:complete)
+endfunction
+
+autocmd CompleteDone * call CompleteSnippet()
 "}}}
 
 " YouCompleteMe -----------------------------------------------------------{{{
@@ -217,10 +249,6 @@
   " Close the documentation window when completion is done
   autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
-  " map ctrl+space for complete
-  inoremap <silent><expr> <c-space>
-           \ pumvisible() ? "<C-n>" :
-           \ deoplete#mappings#manual_complete()
   " lua
   let g:lua_check_syntax = 0
   let g:lua_complete_omni = 1
@@ -236,29 +264,29 @@
   let g:deoplete#sources.cpp=['ultisnips', 'LanguageClient']
   let g:deoplete#sources.c=['ultisnips', 'LanguageClient']
   let g:deoplete#sources.go=['ultisnips', 'LanguageClient']
-  let g:deoplete#sources#clang#libclang_path='/usr/lib64/libclang.so'
-  let g:deoplete#sources#clang#clang_header='/usr/lib64/clang/'
 
-function SetLSPShortcuts()
-  nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
-  nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
-  nnoremap <leader>lf :call LanguageClient#textDocument_formatting()<CR>
-  nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
-  nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
-  nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
-  nnoremap <leader>lc :call LanguageClient#textDocument_completion()<CR>
-  nnoremap <leader>lh :call LanguageClient#textDocument_hover()<CR>
-  nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
-  nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
+  let g:LanguageClient_hasSnippetSupport = 1
 
-  nnoremap <F1> :call LanguageClient_contextMenu()<CR>
-  nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-endfunction()
+  function SetLSPShortcuts()
+    nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
+    nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
+    nnoremap <leader>lf :call LanguageClient#textDocument_formatting()<CR>
+    nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
+    nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
+    nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
+    nnoremap <leader>lc :call LanguageClient#textDocument_completion()<CR>
+    nnoremap <leader>lh :call LanguageClient#textDocument_hover()<CR>
+    nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
+    nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
 
-augroup LSP
-  autocmd!
-  autocmd FileType cpp,c,go,rust call SetLSPShortcuts()
-augroup END
+    nnoremap <F1> :call LanguageClient_contextMenu()<CR>
+    nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+  endfunction()
+
+  augroup LSP
+    autocmd!
+    autocmd FileType cpp,c,go,rust call SetLSPShortcuts()
+  augroup END
 
   if !exists('g:deoplete#omni#functions')
     let g:deoplete#omni#functions = {}
