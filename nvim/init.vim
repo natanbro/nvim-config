@@ -92,17 +92,10 @@
 "}}}
 
 " C/C++ Development -------------------------------------------------------{{{
-  let g:ycm_confirm_extra_conf = 0
-  let linter = neomake#makers#ft#c#clang()
-  function linter.fn(jobinfo) abort
-    let maker = copy(self)
-    if filereadable('.clang')
-      let maker.args += split(join(readfile('.clang'), "\n"))
-    endif
-    return maker
-  endfunction
 
-  let g:neomake_c_clang_maker = linter
+  let g:c_syntax_for_h=1
+  let g:neomake_c_enabled_makers = [] " we use LSP
+  let g:neomake_cpp_enabled_makers = [] " we use LSP
 "}}}
 
 " General -----------------------------------------------------------------{{{
@@ -379,6 +372,7 @@ autocmd CompleteDone * call CompleteSnippet()
   let g:LanguageClient_serverCommands = {
     \ 'rust': ['cargo', 'run', '--release', '--manifest-path='.$HOME.'/.config/nvim/rust/rls/Cargo.toml'],
     \ 'c'   : ['clangd'],
+    \ 'cpp' : ['clangd'],
     \ 'go'  : ['go-langserver', '-gocodecompletion'],
     \ }
 "}}}
