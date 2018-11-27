@@ -22,7 +22,6 @@
   Plug 'moll/vim-bbye'
 
 " color
-  Plug 'mhartington/oceanic-next'
   Plug 'flazz/vim-colorschemes'
   Plug 'felixhummel/setcolors.vim'
 
