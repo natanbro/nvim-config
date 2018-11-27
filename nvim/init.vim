@@ -183,47 +183,41 @@
 "}}}
 
 " UltiSnips ---------------------------------------------------------------{{{
-imap <silent><expr> <CR> pumvisible() ? "\<c-y>" : "\<cr>"
+  imap <silent><expr> <CR> pumvisible() ? "\<c-y>" : "\<cr>"
 
-let g:UltiSnipsExpandTrigger="<NUL>"
-let g:UltiSnipsListSnippets="<NUL>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+  let g:UltiSnipsExpandTrigger="<NUL>"
+  let g:UltiSnipsListSnippets="<NUL>"
+  let g:UltiSnipsJumpForwardTrigger="<tab>"
+  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
   let g:ulti_expand_res = 0 "default value, just set once
 
-function! CompleteSnippet()
-  if empty(v:completed_item)
-    return
-  endif
+  function! CompleteSnippet()
+    if empty(v:completed_item)
+      return
+    endif
 
-  call UltiSnips#ExpandSnippet()
-  if g:ulti_expand_res > 0
-    return
-  endif
+    call UltiSnips#ExpandSnippet()
+    if g:ulti_expand_res > 0
+      return
+    endif
 
-  let l:complete = type(v:completed_item) == v:t_dict ? v:completed_item.word : v:completed_item
-  let l:comp_len = len(l:complete)
+    let l:complete = type(v:completed_item) == v:t_dict ? v:completed_item.word : v:completed_item
+    let l:comp_len = len(l:complete)
 
-  let l:cur_col = mode() == 'i' ? col('.') - 2 : col('.') - 1
-  let l:cur_line = getline('.')
+    let l:cur_col = mode() == 'i' ? col('.') - 2 : col('.') - 1
+    let l:cur_line = getline('.')
 
-  let l:start = l:comp_len <= l:cur_col ? l:cur_line[:l:cur_col - l:comp_len] : ''
-  let l:end = l:cur_col < len(l:cur_line) ? l:cur_line[l:cur_col + 1 :] : ''
+    let l:start = l:comp_len <= l:cur_col ? l:cur_line[:l:cur_col - l:comp_len] : ''
+    let l:end = l:cur_col < len(l:cur_line) ? l:cur_line[l:cur_col + 1 :] : ''
 
-  call setline('.', l:start . l:end)
-  call cursor('.', l:cur_col - l:comp_len + 2)
+    call setline('.', l:start . l:end)
+    call cursor('.', l:cur_col - l:comp_len + 2)
 
-  call UltiSnips#Anon(l:complete)
-endfunction
+    call UltiSnips#Anon(l:complete)
+  endfunction
 
-autocmd CompleteDone * call CompleteSnippet()
-"}}}
-
-" YouCompleteMe -----------------------------------------------------------{{{
-  let g:ycm_filetype_specific_completion_to_disable = {
-    \ 'go': 1
-    \}
+  autocmd CompleteDone * call CompleteSnippet()
 "}}}
 
 " Depolete ----------------------------------------------------------------{{{
