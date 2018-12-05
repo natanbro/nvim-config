@@ -142,11 +142,13 @@
   let g:echodoc#enable_at_startup = 1
   let g:echodoc#type = 'signature'
 "}}}
+
 " Denite ------------------------------------------------------------------{{{
 
   call denite#custom#option('default', 'prompt', '»')
-  call denite#custom#source(
-        \ 'default', 'matchers', ['matcher_cpsm'])
+  call denite#custom#option('default', 'auto-resize', 1)
+  call denite#custom#option('default', 'direction', 'botright')
+  call denite#custom#source('default', 'matchers', ['matcher_cpsm'])
 
   " Change mappings.
   call denite#custom#map(
@@ -162,13 +164,56 @@
   \ 'noremap'
   \)
 
-  nnoremap <silent> <c-p> :Denite -auto-resize -direction=botright file_rec<CR>
+  function CtrlP()
+    call denite#start(b:ctrlp_sources)
+  endfunction
+
+  function DetectSources()
+    if exists('b:ctrlp_sources')
+      return
+    endif
+
+    let b:ctrlp_sources = []
+    silent! !git status
+    if v:shell_error == 0
+      call add(b:ctrlp_sources, {'name': 'git', 'args': []})
+      call add(b:ctrlp_sources, {'name': 'git-other', 'args': []})
+      silent! !git config --file .gitmodules --list
+      if v:shell_error == 0
+        call add(b:ctrlp_sources, {'name': 'git-submodules', 'args': []})
+      endif
+    else
+      call add(b:ctrlp_sources, {'name': 'file/rec', 'args': []})
+    endif
+  endfunction
+
+  au BufEnter * call DetectSources()
+  nnoremap <silent> <c-p> :call CtrlP() <CR>
   nnoremap <silent> <c-j> :Denite -auto-resize -direction=botright location_list<CR>
   nnoremap <silent> <a-p> :DeniteCursorWord -auto-resize -direction=botright grep<CR>
   nnoremap <silent> <a-s-p> :Denite -auto-resize -direction=botright grep<CR>
   nnoremap <silent> <c-a-o> :Denite -auto-resize -direction=botright outline<CR>
   nnoremap <leader>\ :Denite -auto-resize -direction=botright command<CR>
-  call denite#custom#var('file_rec', 'command',
+
+  call denite#custom#alias('source', 'git', 'file/rec')
+  call denite#custom#var('git', 'command',
+        \['git',
+        \ 'ls-files',
+        \ '-c'])
+
+  call denite#custom#alias('source', 'git-other', 'file/rec')
+  call denite#custom#var('git-other', 'command',
+        \['git',
+        \ 'ls-files',
+        \ '-o',
+        \ '--exclude-standard'])
+
+  call denite#custom#alias('source', 'git-submodules', 'file/rec')
+  call denite#custom#var('git-submodules', 'command',
+        \['sh', '-c',
+        \ 'git config --file .gitmodules --get-regexp path | cut -d " " -f2- | xargs git ls-files --recurse-submodules'])
+
+  call denite#custom#var('file/rec', 'command',
         \['ag',
         \'--follow',
         \'--nocolor',
