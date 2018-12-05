@@ -425,7 +425,7 @@
   nmap <c-s-j> ddp
   nmap <c-s> :w<CR>
   vmap <leader>y "+y
-  nmap <F12> :nohl<CR>
+  nmap <F12> :nohl<CR>:call LanguageClient_clearDocumentHighlight()<CR>
 "}}}
 
 " extra whitespace --------------------------------------------------------{{{
