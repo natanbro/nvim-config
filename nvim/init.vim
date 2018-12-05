@@ -13,10 +13,11 @@
   Plug 'embear/vim-localvimrc'
 
 " syntax
+  Plug 'fatih/vim-go' " go
   Plug 'sheerun/vim-polyglot'
   Plug 'benekastah/neomake'
   Plug 'Chiel92/vim-autoformat'
-  Plug 'rust-lang/rust.vim'
+  Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
 " buffer management
   Plug 'moll/vim-bbye'
@@ -42,8 +43,7 @@
   Plug 'junegunn/fzf'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'zchee/deoplete-jedi' " python
-  Plug 'xolox/vim-lua-ftplugin' " lua
-  Plug 'fatih/vim-go' " go
+  Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' } " lua
 
 " snippets
   Plug 'SirVer/ultisnips'
