@@ -56,6 +56,12 @@
   Plug 'majutsushi/tagbar'
   Plug 'Shougo/echodoc.vim'
 
+" Language Servers
+  function! BuildCCLS(info)
+    !cmake -H. -BRelease && cmake --build Release
+  endfunction
+  Plug 'MaskRay/ccls', { 'do': function('BuildCCLS') }
+
 " movement
   Plug 'tpope/vim-surround'
   Plug 'ficoos/plumb.vim'
@@ -403,10 +409,10 @@
   autocmd BufWritePost *.rs Neomake! cargo
   let g:racer_cmd = $HOME."/.cargo/bin/racer"
   let g:LanguageClient_serverCommands = {
-    \ 'rust': ['cargo', 'run', '--release', '--manifest-path='.$HOME.'/.config/nvim/rust/rls/Cargo.toml'],
-    \ 'c'   : ['clangd'],
-    \ 'cpp' : ['clangd'],
-    \ 'go'  : ['go-langserver', '-gocodecompletion'],
+    \ 'rust':   ['cargo', 'run', '--release', '--manifest-path='.$HOME.'/.config/nvim/rust/rls/Cargo.toml'],
+    \ 'c'   :   [g:plug_home.'/ccls/Release/ccls'],
+    \ 'cpp' :   [g:plug_home.'/ccls/Release/ccls'],
+    \ 'go'  :   ['go-langserver', '-gocodecompletion'],
     \ }
 "}}}
 
@@ -438,26 +444,7 @@
 
 "}}}
 
-" cscope ------------------------------------------------------------------{{{
-
- if has("cscope")
-   set csto=0
-   set cst
-   set nocsverb
-   " add any database in current directory
-   if filereadable("cscope.out")
-     cs add cscope.out
-     " else add database pointed to by environment
-   elseif $CSCOPE_DB != ""
-     cs add $CSCOPE_DB
-   endif
-  endif
-
-  nmap <leader>] :cs find s <C-R>=expand("<cword>")<CR><CR>
-  nmap <leader>[ :cs find c <C-R>=expand("<cword>")<CR><CR>
-  nmap <leader>d <c-w>}
-"}}}
-" viewdoc -------------------------------------------------------------------{{{
+" viewdoc -----------------------------------------------------------------{{{
   let g:no_plugin_maps = 1
   let g:viewdoc_open='edit'
   let g:viewdoc_only=0
@@ -485,19 +472,6 @@
 " lvimrc ------------------------------------------------------------------{{{
 
   let g:localvimrc_persistent=2
-"}}}
-
-" cscope ------------------------------------------------------------------{{{
-
-  function! Rescope()
-    if filereadable(".cscope")
-      :silent exec "!./.cscope"
-      :cscope reset
-    endif
-  endfunction
-
-  autocmd! BufWritePost * call Rescope()
-
 "}}}
 
 " vim: set tabstop=2 shiftwidth=2 expandtab:
