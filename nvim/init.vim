@@ -16,7 +16,6 @@
   Plug 'fatih/vim-go' " go
   Plug 'sheerun/vim-polyglot'
   Plug 'benekastah/neomake'
-  Plug 'Chiel92/vim-autoformat'
   Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
 " buffer management
@@ -175,11 +174,6 @@
         \'--nocolor',
         \'--nogroup',
         \'-g', ''])
-"}}}
-
-" Vim format --------------------------------------------------------------{{{
-
-  noremap <silent> <leader>f :Autoformat<CR>
 "}}}
 
 " UltiSnips ---------------------------------------------------------------{{{
