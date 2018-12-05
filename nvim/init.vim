@@ -307,10 +307,11 @@
     nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
     nnoremap <leader>lc :call LanguageClient#textDocument_completion()<CR>
     nnoremap <leader>lh :call LanguageClient#textDocument_hover()<CR>
-    nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
+    nnoremap <leader>ls :Denite -auto-resize -direction=botright documentSymbol<CR>
+    nnoremap <leader>lS :Denite -auto-resize -direction=botright workspaceSymbol<CR>
     nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
 
-    nnoremap <F1> :call LanguageClient_contextMenu()<CR>
+    nnoremap <F1> :Denite -auto-resize -direction=botright contextMenu<CR>
     nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
   endfunction()
 
