@@ -41,7 +41,6 @@
     \ }
   Plug 'junegunn/fzf'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'zchee/deoplete-jedi' " python
   Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' } " lua
 
 " snippets
@@ -49,7 +48,6 @@
   Plug 'honza/vim-snippets'
 
 " IDE
-  Plug 'davidhalter/jedi-vim' " python
   Plug 'itchyny/vim-cursorword' " highlight word under cursor
   Plug 'scrooloose/nerdtree'
   Plug 'powerman/vim-plugin-viewdoc' " Doc integration
@@ -57,6 +55,15 @@
   Plug 'Shougo/echodoc.vim'
 
 " Language Servers
+
+  " The reason we use a function is because we want to get the event
+  " even if the package is unchanged as the updates are not tracked in
+  " this repo
+  function! BuildPyls(info)
+    !./install.sh
+  endfunction
+  Plug 'ficoos/pyls-vimplug', { 'do': function('BuildPyls') }
+
   function! BuildCCLS(info)
     !cmake -H. -BRelease && cmake --build Release
   endfunction
@@ -81,18 +88,7 @@
 
 " Python development ------------------------------------------------------{{{
 
-  let g:neomake_python_enabled_makers = ['flake8']
-  call neomake#configure#automake('nw', 750)
-  " we use deoplete-jedi
-  let g:jedi#completions_enabled = 0
-  " autocmd BufWinEnter '__doc__' setlocal bufhidden=delete
-  let g:jedi#goto_command = "<leader>d"
-  let g:jedi#goto_assignments_command = "<leader>g"
-  let g:jedi#goto_definitions_command = ""
-  let g:jedi#documentation_command = "<leader>?"
-  let g:jedi#usages_command = "<leader>n"
-  let g:jedi#completions_command = "<C-Space>"
-  let g:jedi#rename_command = "<leader>r"
+  let g:neomake_python_enabled_makers = [] " we use LSP
 
 "}}}
 
@@ -290,7 +286,7 @@
     let g:deoplete#sources={}
   endif
   let g:deoplete#sources._=['buffer', 'file', 'ultisnips']
-  let g:deoplete#sources.python=['buffer', 'file', 'ultisnips', 'jedi']
+  let g:deoplete#sources.python=['buffer', 'file', 'ultisnips', 'LanguageClient']
   let g:deoplete#sources.rust=['ultisnips', 'LanguageClient']
   let g:deoplete#sources.cpp=['ultisnips', 'LanguageClient']
   let g:deoplete#sources.c=['ultisnips', 'LanguageClient']
@@ -317,7 +313,7 @@
 
   augroup LSP
     autocmd!
-    autocmd FileType cpp,c,go,rust call SetLSPShortcuts()
+    autocmd FileType cpp,c,go,rust,python call SetLSPShortcuts()
   augroup END
 
   if !exists('g:deoplete#omni#functions')
@@ -414,6 +410,7 @@
     \ 'c'   :   [g:plug_home.'/ccls/Release/ccls'],
     \ 'cpp' :   [g:plug_home.'/ccls/Release/ccls'],
     \ 'go'  :   ['go-langserver', '-gocodecompletion'],
+    \ 'python': [g:plug_home.'/pyls-vimplug/pyls'],
     \ }
 "}}}
 
