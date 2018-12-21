@@ -21,8 +21,7 @@
   Plug 'moll/vim-bbye'
 
 " color
-  Plug 'flazz/vim-colorschemes'
-  Plug 'felixhummel/setcolors.vim'
+  Plug 'nanotech/jellybeans.vim'
 
 " git
   Plug 'tpope/vim-fugitive'
