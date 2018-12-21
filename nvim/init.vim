@@ -224,7 +224,8 @@
 "}}}
 
 " UltiSnips ---------------------------------------------------------------{{{
-  imap <silent><expr> <CR> pumvisible() ? "\<c-y>" : "\<cr>"
+  imap <silent><expr> <tab> pumvisible() ? "\<c-y>" : "\<tab>"
+  imap <silent><expr> <cr> pumvisible() ? "\<esc>o" : "\<tab>"
 
   let g:UltiSnipsExpandTrigger="<NUL>"
   let g:UltiSnipsListSnippets="<NUL>"
@@ -258,7 +259,7 @@
     call UltiSnips#Anon(l:complete)
   endfunction
 
-  autocmd CompleteDone * call CompleteSnippet()
+  "autocmd CompleteDone * call CompleteSnippet()
 "}}}
 
 " Depolete ----------------------------------------------------------------{{{
@@ -292,7 +293,7 @@
   let g:deoplete#sources.c=['ultisnips', 'LanguageClient']
   let g:deoplete#sources.go=['ultisnips', 'LanguageClient']
 
-  let g:LanguageClient_hasSnippetSupport = 1
+  "let g:LanguageClient_hasSnippetSupport = 1
 
   function SetLSPShortcuts()
     nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
