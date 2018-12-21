@@ -15,11 +15,10 @@ sudo dnf install -y \
 echo Setting up python venv
 
 mkdir -p ~/.config/nvim/
-
 pushd ~/.config/nvim
-virtualenv-3 ./pyenv3
+virtualenv --python=python3 ./pyenv3
 pyenv3/bin/pip install --upgrade neovim
-virtualenv-2 ./pyenv2
+virtualenv --python=python2 ./pyenv2
 pyenv2/bin/pip install --upgrade neovim
 popd
 
