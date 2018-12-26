@@ -15,7 +15,7 @@
 " syntax
   Plug 'sheerun/vim-polyglot'
   Plug 'benekastah/neomake'
-  Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+  "Plug 'rust-lang/rust.vim'
 
 " buffer management
   Plug 'moll/vim-bbye'
@@ -384,7 +384,7 @@
   autocmd BufWritePost *.rs Neomake! cargo
   let g:racer_cmd = $HOME."/.cargo/bin/racer"
   let g:LanguageClient_serverCommands = {
-    \ 'rust':   ['cargo', 'run', '--release', '--manifest-path='.$HOME.'/.config/nvim/rust/rls/Cargo.toml'],
+    \ 'rust':   ['rls'],
     \ 'c'   :   [g:plug_home.'/ccls/Release/ccls'],
     \ 'cpp' :   [g:plug_home.'/ccls/Release/ccls'],
     \ 'go'  :   ['bingo'],
