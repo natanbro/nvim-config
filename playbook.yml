@@ -1,0 +1,65 @@
+---
+
+- name: set up neovim
+  hosts: localhost
+  vars:
+    config_dir: ~/.config/nvim/
+    neovim_autoload_dir: ~/.local/share/nvim/site/autoload/
+  tasks:
+
+  - name: install packages
+    become: yes
+    package:
+      name:
+        - clang-tools-extra
+        - git-all
+        - the_silver_searcher
+        - xsel
+        - cmake
+        - neovim
+        - gcc
+      state: present
+
+  - name: create neovim configuration dir
+    file:
+      path: "{{ config_dir }}"
+      state: directory
+      mode: 0775
+
+  - name: create python3 virtualenv
+    command: "virtualenv --python=python3 '{{ config_dir }}/pyenv3'"
+    args:
+      creates: "{{ config_dir }}/pyenv3/bin/python"
+
+  - name: (pyenv3) install nevim python bindings
+    pip:
+      name: neovim
+      virtualenv: "{{ config_dir }}/pyenv3"
+
+  - name: create python2 virtualenv
+    command: "virtualenv --python=python2 '{{ config_dir }}/pyenv2'"
+    args:
+      creates: "{{ config_dir }}/pyenv3/bin/python"
+
+  - name: (pyenv2) install nevim python bindings
+    pip:
+      name: neovim
+      virtualenv: "{{ config_dir }}/pyenv2"
+
+  - name: create neovim autoload dir
+    file:
+      path: "{{ neovim_autoload_dir }}"
+      state: directory
+      mode: 0775
+
+  - name: install vim-plug
+    get_url:
+      url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+      dest: "{{ neovim_autoload_dir }}/plug.vim"
+      mode: 0664
+
+  - name: copy neovim configuration
+    copy:
+      src: init.vim
+      dest: "{{ config_dir }}/init.vim"
+      mode: 0664

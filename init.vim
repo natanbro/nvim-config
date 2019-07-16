@@ -13,17 +13,15 @@
   Plug 'embear/vim-localvimrc'
 
 " syntax
-  Plug 'fatih/vim-go' " go
   Plug 'sheerun/vim-polyglot'
   Plug 'benekastah/neomake'
-  Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+  "Plug 'rust-lang/rust.vim'
 
 " buffer management
   Plug 'moll/vim-bbye'
 
 " color
-  Plug 'flazz/vim-colorschemes'
-  Plug 'felixhummel/setcolors.vim'
+  Plug 'nanotech/jellybeans.vim'
 
 " git
   Plug 'tpope/vim-fugitive'
@@ -92,6 +90,16 @@
 
 "}}}
 
+" Go development ------------------------------------------------------{{{
+
+  let g:neomake_go_enabled_makers = [] " we use LSP
+  function GoUpdateBinaries()
+    !go get -u github.com/saibing/bingo
+  endfunction
+
+
+"}}}
+
 " C/C++ Development -------------------------------------------------------{{{
 
   let g:c_syntax_for_h=1
@@ -130,9 +138,7 @@
     " upgrade vim-plug itself
     :PlugUpgrade
     " upgrade the vim-go binaries
-    :GoUpdateBinaries
-    " upgrade the go language server
-    :!go get -u github.com/sourcegraph/go-langserver
+    :call GoUpdateBinaries()
     " upgrade the plugins
     :PlugUpdate
   endfunction
@@ -294,6 +300,7 @@
   let g:deoplete#sources.go=['ultisnips', 'LanguageClient']
 
   "let g:LanguageClient_hasSnippetSupport = 1
+  let g:LanguageClient_hasSnippetSupport = 0
 
   function SetLSPShortcuts()
     nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
@@ -407,10 +414,10 @@
   autocmd BufWritePost *.rs Neomake! cargo
   let g:racer_cmd = $HOME."/.cargo/bin/racer"
   let g:LanguageClient_serverCommands = {
-    \ 'rust':   ['cargo', 'run', '--release', '--manifest-path='.$HOME.'/.config/nvim/rust/rls/Cargo.toml'],
+    \ 'rust':   ['rls'],
     \ 'c'   :   [g:plug_home.'/ccls/Release/ccls'],
     \ 'cpp' :   [g:plug_home.'/ccls/Release/ccls'],
-    \ 'go'  :   ['go-langserver', '-gocodecompletion'],
+    \ 'go'  :   ['bingo'],
     \ 'python': [g:plug_home.'/pyls-vimplug/pyls'],
     \ }
 "}}}
